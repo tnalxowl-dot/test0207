@@ -4,7 +4,7 @@ import Header from './components/Header';
 import { RecipeState } from './types';
 import { getRecipeRecommendation, generateDishImage } from './services/geminiService';
 
-// Fix: Declare global google variable for Google Identity Services loaded via script tag in index.html.
+// Declare global google variable for Google Identity Services
 declare var google: any;
 
 const App: React.FC = () => {
@@ -20,9 +20,10 @@ const App: React.FC = () => {
   const TARGET_FOLDER_ID = "129mkG3u7CprXhWE3EnSe_WnDY4s0B7lS";
   const STORAGE_FOLDER_URL = `https://drive.google.com/drive/folders/${TARGET_FOLDER_ID}?usp=sharing`;
 
-  // 사용자가 요청한 이미지 URL로 교체 (https://ibb.co/yBgjb2QH 의 직접 이미지 링크 버전)
-  const topBannerUrl = "https://i.ibb.co/4g4r5kVh/Kakao-Talk-20251229-194547124-01.jpg"; 
-  const footerLogoUrl = "https://i.ibb.co/4g4r5kVh/Kakao-Talk-20251229-194547124-01.jpg";
+  // 사용자가 요청한 이미지 URL로 교체
+  const imageUrl = "https://i.ibb.co/4g4r5kVh/Kakao-Talk-20251229-194547124-01.jpg";
+  const topBannerUrl = imageUrl; 
+  const footerLogoUrl = imageUrl;
 
   const handleRecommend = async () => {
     if (!ingredients.trim()) {
@@ -39,8 +40,8 @@ const App: React.FC = () => {
       const titleMatch = recipeText.match(/# (.*)|요리명: (.*)|제목: (.*)/);
       const dishName = titleMatch ? (titleMatch[1] || titleMatch[2] || titleMatch[3]) : 'delicious food';
       
-      const imageUrl = await generateDishImage(dishName.trim());
-      setState(prev => ({ ...prev, loading: false, image: imageUrl }));
+      const imageUrlGenerated = await generateDishImage(dishName.trim());
+      setState(prev => ({ ...prev, loading: false, image: imageUrlGenerated }));
     } catch (err) {
       setState(prev => ({ ...prev, loading: false, error: '레시피를 생성하는 중에 문제가 발생했습니다.' }));
     }
@@ -161,8 +162,8 @@ const App: React.FC = () => {
                 <h2 className="text-2xl font-black text-gray-900 mb-6 flex items-center gap-3">
                   <span className="bg-orange-500 text-white p-2 rounded-xl text-xl">📝</span> 레시피
                 </h2>
-                <div className="prose prose-orange max-w-none text-gray-800 leading-relaxed">
-                  {state.content.split('\n').map((line, i) => <p key={i}>{line}</p>)}
+                <div className="prose prose-orange max-w-none text-gray-800 leading-relaxed whitespace-pre-wrap">
+                  {state.content}
                 </div>
               </div>
             )}
