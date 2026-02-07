@@ -20,16 +20,9 @@ const App: React.FC = () => {
   const TARGET_FOLDER_ID = "129mkG3u7CprXhWE3EnSe_WnDY4s0B7lS";
   const STORAGE_FOLDER_URL = `https://drive.google.com/drive/folders/${TARGET_FOLDER_ID}?usp=sharing`;
 
-  const getDirectDriveLink = (viewLink: string) => {
-    const match = viewLink.match(/\/d\/(.+?)(?:\/|$)/);
-    if (match && match[1]) {
-      return `https://drive.google.com/thumbnail?id=${match[1]}&sz=w1200`;
-    }
-    return viewLink;
-  };
-
-  const topBannerUrl = getDirectDriveLink("https://drive.google.com/file/d/1po7-OBNf5wKXMRjDjY3Q8pL_8J-N5kA7/view?usp=drive_link");
-  const footerLogoUrl = getDirectDriveLink("https://drive.google.com/file/d/1DCb2rNnnofeWoDHJQuQ77V5zb-X6i6pv/view?usp=drive_link");
+  // 사용자가 요청한 이미지 URL로 교체 (https://ibb.co/yBgjb2QH 의 직접 이미지 링크 버전)
+  const topBannerUrl = "https://i.ibb.co/4g4r5kVh/Kakao-Talk-20251229-194547124-01.jpg"; 
+  const footerLogoUrl = "https://i.ibb.co/4g4r5kVh/Kakao-Talk-20251229-194547124-01.jpg";
 
   const handleRecommend = async () => {
     if (!ingredients.trim()) {
@@ -102,7 +95,6 @@ const App: React.FC = () => {
   };
 
   const handleSaveToDrive = () => {
-    // google 객체 존재 확인 (index.html에서 로드됨)
     if (typeof google === 'undefined' || !google.accounts) {
       alert('구글 서비스 로딩 중입니다. 잠시 후 다시 시도해주세요.');
       return;
@@ -112,7 +104,7 @@ const App: React.FC = () => {
     
     try {
       const client = google.accounts.oauth2.initTokenClient({
-        client_id: '864239857214-placeholder.apps.googleusercontent.com', // 실제 클라이언트 ID가 필요함
+        client_id: '864239857214-placeholder.apps.googleusercontent.com',
         scope: 'https://www.googleapis.com/auth/drive.file',
         callback: (response: any) => {
           if (response.access_token) {
