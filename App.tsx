@@ -1,8 +1,8 @@
 
 import React, { useState } from 'react';
-import Header from './components/Header';
-import { RecipeState } from './types';
-import { getRecipeRecommendation, generateDishImage } from './services/geminiService';
+import Header from './components/Header.tsx';
+import { RecipeState } from './types.ts';
+import { getRecipeRecommendation, generateDishImage } from './services/geminiService.ts';
 
 // Declare global google variable for Google Identity Services
 declare var google: any;
@@ -20,7 +20,7 @@ const App: React.FC = () => {
   const TARGET_FOLDER_ID = "129mkG3u7CprXhWE3EnSe_WnDY4s0B7lS";
   const STORAGE_FOLDER_URL = `https://drive.google.com/drive/folders/${TARGET_FOLDER_ID}?usp=sharing`;
 
-  // 사용자가 요청한 이미지 URL로 교체
+  // 사용자가 요청한 이미지 URL
   const imageUrl = "https://i.ibb.co/4g4r5kVh/Kakao-Talk-20251229-194547124-01.jpg";
   const topBannerUrl = imageUrl; 
   const footerLogoUrl = imageUrl;

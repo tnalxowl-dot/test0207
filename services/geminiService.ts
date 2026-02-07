@@ -7,11 +7,10 @@ import { GoogleGenAI } from "@google/genai";
  * which leads to a ReferenceError that stops the app from rendering (White Screen).
  */
 const getApiKey = () => {
-  try {
-    return process.env.API_KEY || '';
-  } catch (e) {
-    return '';
+  if (typeof process !== 'undefined' && process.env && process.env.API_KEY) {
+    return process.env.API_KEY;
   }
+  return '';
 };
 
 const ai = new GoogleGenAI({ apiKey: getApiKey() });
